@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso - Clínica Odontológica</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="login-container">
+            <h2 class="text-center">Clínica Odontológica</h2>
+            <p class="text-center text-muted">Identifique-se</p>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form action="/autenticar" method="POST">
+                <div class="form-group">
+                    <label for="usuario">Usuário</label>
+                    <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Seu nome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" class="form-control" id="senha" name="senha" placeholder="Sua senha secreta" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="papel">Setor</label>
+                    <select class="form-control" id="papel" name="papel">
+                        <option value="secretaria">Recepção (Secretaria)</option>
+                        <option value="medico">Consultório (Médico/Dentista)</option>
+                        <option value="limpeza">Manutenção (Limpeza)</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">Entrar no Sistema</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

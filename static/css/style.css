@@ -1,0 +1,93 @@
+/* Login */
+body { 
+    padding-top: 100px; 
+    background-color: #08134b; 
+    color: #e2fdf6; 
+}
+.login-container { 
+    max-width: 400px; 
+    margin: 0 auto; 
+    background: #153a83; 
+    padding: 30px; 
+    border-radius: 8px; 
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.5); 
+    border: 2px solid #e2fdf6; 
+}
+h2 {
+    color: #e2fdf6; 
+    font-weight: bold;
+}
+.text-muted {
+    color: #be834e !important; 
+}
+label {
+    color: #e2fdf6; 
+}
+.form-control {
+    background-color: #e2fdf6;
+    color: #08134b;
+    border: 1px solid #49a4fc;
+}
+.form-control:focus {
+    border-color: #e2fdf6;
+    box-shadow: 0 0 8px rgba(190, 131, 78, 0.8);
+}
+.btn-primary {
+    background-color: #e2fdf6;
+    border-color: #e2fdf6;
+    color: #08134b;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #49a4fc;
+    border-color: #49a4fc;
+    color: #e2fdf6;
+}
+
+/* Estilos para os Painéis Internos */
+.dashboard-container {
+    margin-top: 50px;
+    padding: 20px;
+}
+.sidebar {
+    background-color: #153a83;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #e2fdf6;
+    margin-bottom: 20px;
+}
+.main-panel {
+    background-color: #153a83;
+    border-radius: 8px;
+    padding: 25px;
+    border: 1px solid #e2fdf6;
+}
+.card-paciente {
+    background-color: #08134b;
+    border-left: 5px solid #e2fdf6;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 4px;
+}
+.text-ouro {
+    color: #e2fdf6 !important;
+    font-weight: bold;
+}
+.btn-ouro {
+    background-color: #e2fdf6;
+    color: #08134b;
+    font-weight: bold;
+    border: none;
+}
+.btn-ouro:hover {
+    background-color: #49a4fc;
+    color: #e2fdf6;
+}
+.alert-danger {
+    background-color: #be834e;
+    color: #08134b;
+    border: none;
+    text-align: center;
+    font-weight: bold;
+}
