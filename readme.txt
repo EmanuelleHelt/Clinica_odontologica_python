@@ -24,3 +24,11 @@ Estrutura do Banco de Dados
 O sistema utiliza SQLite (banco de dados em arquivo).
 
 Ao iniciar o programa pela primeira vez, ele criará automaticamente o arquivo clinica_real.db se não existir.
+
+Observação: caso haja algum ERRO, EM VERMELHO NO PROPRIO TERMINAL:
+cheque se o python está adicionado ao PATH das variaveis do sistema.
+para checar, confira em variais do sistema > PATH > editar e veja se tem algo lá relacionado a scripts e Python.
+tem que duas linhas parecidas com isso:
+C:\Users\SEU_USUARIO\AppData\Local\Programs\Python\Python31x\Scripts
+C:\Users\SEU_USUARIO\AppData\Local\Programs\Python\Python31x 
+Onde o caminho é a instalação do seu python, que caso você não saiba, procura no seu computador a pasta de instalação ou no google como checa isso.
