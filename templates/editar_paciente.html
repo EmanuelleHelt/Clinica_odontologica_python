@@ -16,8 +16,8 @@
                         <a href="{{ url_for('secretaria_recepcao') }}" class="btn btn-ouro">Desistir da Edição</a>
                     </div>
                     
-                    <h2 class="text-ouro text-center" style="margin-top: 0;">Reescrever Histórico</h2>
-                    <p class="text-center text-muted">Alterando os registros oficiais da cobaia #{{ paciente.id }}</p>
+                    <h2 class="text-ouro text-center" style="margin-top: 0;">Alterar dados</h2>
+                    <p class="text-center text-muted">Alterando os registros oficiais do paciente #{{ paciente.nome }}</p>
                     <hr style="border-color: #e2fdf6;">
                     
                     <form action="{{ url_for('editar_paciente', id_paciente=paciente.id) }}" method="POST">
@@ -27,7 +27,7 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="telefone" style="color: #e2fdf6;">Telefone para Cobrança</label>
+                            <label for="telefone" style="color: #e2fdf6;">Telefone</label>
                             <input type="text" class="form-control" id="telefone" name="telefone" value="{{ paciente.telefone }}" required>
                         </div>
                         
@@ -41,7 +41,7 @@
                         </div>
 
                         <hr style="border-color: #49a4fc; margin-top: 30px;">
-                        <h4 class="text-ouro">Manipular Chaves de Acesso</h4>
+                        <h4 class="text-ouro">Modificar Chaves de Acesso</h4>
 
                         <div class="form-group">
                             <label for="usuario_login" style="color: #e2fdf6;">Nome de Usuário (Login)</label>
@@ -53,7 +53,7 @@
                             <input type="text" class="form-control" id="senha_login" name="senha_login" value="{{ senha_atual }}" required>
                         </div>
                         
-                        <button type="submit" class="btn btn-ouro btn-block" style="margin-top: 20px; font-size: 16px;">Salvar Novas Mentiras</button>
+                        <button type="submit" class="btn btn-ouro btn-block" style="margin-top: 20px; font-size: 16px;">Salvar dados alterados</button>
                     </form>
                 </div>
             </div>
