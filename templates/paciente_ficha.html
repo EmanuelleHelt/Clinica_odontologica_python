@@ -13,33 +13,38 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="main-panel">
                     <div class="text-right mb-3" style="margin-bottom: 20px;">
-                        <a href="{{ url_for('login') }}" class="btn btn-ouro">Sair</a>
+                        <a href="{{ url_for('login') }}" class="btn btn-ouro">Fugir do Consultório (Sair)</a>
                     </div>
                     
-                    <h2 class="text-ouro text-center" style="margin-top: 0;">Prontuário Médico</h2>
+                    <h2 class="text-ouro text-center" style="margin-top: 0;">Prontuário Médico Oficial</h2>
                     <hr style="border-color: #e2fdf6;">
                     
                     <div class="card-paciente">
                         <h3 style="color: #e2fdf6; margin-top: 0;">{{ paciente.nome }}</h3>
                         <p style="color: #49a4fc; font-size: 16px;">
-                            <strong>Idade:</strong> {{ paciente.idade }} anos<br>
-                            <strong>Status Atual:</strong> {{ paciente.status }}
+                            <strong>Telefone de Contato:</strong> {{ paciente.telefone }}<br>
+                            <strong>Status Atual:</strong> <span class="label label-info">{{ paciente.status }}</span><br>
+                            <strong>Credencial de Acesso:</strong> {{ paciente.usuario_login }}
                         </p>
                     </div>
 
-                    <h4 class="text-ouro" style="margin-top: 30px;">Próximo Agendamento</h4>
-                    <div style="background-color: #153a83; border: 1px solid #49a4fc; padding: 15px; border-radius: 4px;">
-                        <p style="color: #e2fdf6; margin: 0; font-size: 18px;">
-                            <strong>Procedimento:</strong> {{ paciente.proximo_procedimento }}
-                        </p>
-                    </div>
-
-                    <h4 class="text-ouro" style="margin-top: 30px;">Histórico de atendimento</h4>
-                    <ul style="color: #49a4fc; font-size: 16px; line-height: 1.8;">
-                        {% for item in paciente.historico %}
-                            <li>{{ item }}</li>
+                    <h4 class="text-ouro" style="margin-top: 30px;">Agendamentos e Procedimentos</h4>
+                    
+                    {% if consultas %}
+                        {% for consulta in consultas %}
+                        <div style="background-color: #153a83; border: 1px solid #49a4fc; padding: 15px; border-radius: 4px; margin-bottom: 10px;">
+                            <p style="color: #e2fdf6; margin: 0; font-size: 16px;">
+                                <strong>Horário:</strong> <span style="color: #be834e;">{{ consulta.horario }}</span> | 
+                                <strong>Procedimento:</strong> {{ consulta.procedimento }}
+                            </p>
+                        </div>
                         {% endfor %}
-                    </ul>
+                    {% else %}
+                        <div style="background-color: #08134b; border: 1px dashed #e2fdf6; padding: 15px; border-radius: 4px;">
+                            <p style="color: #49a4fc; margin: 0; text-align: center;">Nenhuma tortura agendada no momento. Você está a salvo.</p>
+                        </div>
+                    {% endif %}
+
                 </div>
             </div>
         </div>

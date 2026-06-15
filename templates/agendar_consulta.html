@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Consulta - Secretaria</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container dashboard-container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="main-panel">
+                    <div class="text-right mb-3" style="margin-bottom: 20px;">
+                        <a href="{{ url_for('secretaria_consultas') }}" class="btn btn-ouro">Voltar para Consultas</a>
+                    </div>
+                    
+                    {% with messages = get_flashed_messages() %}
+                      {% if messages %}
+                        {% for message in messages %}
+                          <div class="alert alert-danger" style="background-color: #be834e; color: #08134b; font-weight: bold;">{{ message }}</div>
+                        {% endfor %}
+                      {% endif %}
+                    {% endwith %}
+                    
+                    <h2 class="text-ouro text-center" style="margin-top: 0;">Agendar Nova Consulta</h2>
+                    <p class="text-center text-muted">A agenda do sistema inteligente irá bloquear horários conflitantes.</p>
+                    <hr style="border-color: #e2fdf6;">
+                    
+                    <form action="/agendar_consulta" method="POST">
+                        <div class="form-group">
+                            <label for="nome_paciente" style="color: #e2fdf6;">Selecione o Paciente</label>
+                            <select class="form-control" id="nome_paciente" name="nome_paciente" required style="background-color: #08134b; color: #e2fdf6; border: 1px solid #49a4fc;">
+                                <option value="" disabled selected>Escolha uma alma já cadastrada</option>
+                                {% for p in pacientes %}
+                                    <option value="{{ p.nome }}">{{ p.nome }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dentista_login" style="color: #e2fdf6;">Selecione o Cirurgião-Dentista</label>
+                            <select class="form-control" id="dentista_login" name="dentista_login" required style="background-color: #08134b; color: #e2fdf6; border: 1px solid #49a4fc;">
+                                <option value="" disabled selected>Quem vai manusear as brocas?</option>
+                                {% for d in dentistas %}
+                                    <option value="{{ d.usuario }}">{{ d.usuario }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="data_consulta" style="color: #e2fdf6;">Data da Consulta</label>
+                            <input type="date" class="form-control" id="data_consulta" name="data_consulta" required style="background-color: #08134b; color: #e2fdf6; border: 1px solid #49a4fc;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="procedimento" style="color: #e2fdf6;">Procedimento Clínico</label>
+                            <input type="text" class="form-control" id="procedimento" name="procedimento" placeholder="Ex: Extração de Siso" required style="background-color: #08134b; color: #e2fdf6; border: 1px solid #49a4fc;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="horario" style="color: #e2fdf6;">Horário Disponível</label>
+                            <select class="form-control" id="horario" name="horario" required style="background-color: #08134b; color: #e2fdf6; border: 1px solid #49a4fc;">
+                                <option value="" disabled selected>Defina a data e o médico primeiro</option>
+                                <option value="08:00">08:00</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-ouro btn-block" style="margin-top: 20px; font-size: 16px;">Confirmar e Gravar Agendamento</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const campoDentista = document.getElementById('dentista_login');
+        const campoData = document.getElementById('data_consulta');
+        const campoHorario = document.getElementById('horario');
+
+        function atualizarHorariosDisponiveis() {
+            const dentista = campoDentista.value;
+            const data = campoData.value;
+
+            if (!dentista || !data) return;
+
+            // Fazendo a busca oculta no servidor real
+            fetch(`/api/horarios_ocupados?data=${data}&dentista=${dentista}`)
+                .then(response => response.json())
+                .then(horariosOcupados => {
+                    // Reseta todas as opções para ativas primeiro
+                    for (let option of campoHorario.options) {
+                        if (option.value !== "") {
+                            option.disabled = false;
+                            option.style.color = "#e2fdf6";
+                        }
+                    }
+
+                    // Cruza os dados e apaga o que já foi roubado
+                    for (let option of campoHorario.options) {
+                        if (horariosOcupados.includes(option.value)) {
+                            option.disabled = true;
+                            option.style.color = "#be834e"; // Fica com cor de aviso para indicar o bloqueio
+                        }
+                    }
+                });
+        }
+
+        campoDentista.addEventListener('change', atualizarHorariosDisponiveis);
+        campoData.addEventListener('change', atualizarHorariosDisponiveis);
+    </script>
+</body>
+</html>

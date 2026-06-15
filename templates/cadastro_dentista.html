@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Novo Dentista - Secretaria</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container dashboard-container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="main-panel">
+                    <div class="text-right mb-3" style="margin-bottom: 20px;">
+                        <a href="{{ url_for('secretaria_dentistas') }}" class="btn btn-ouro">Voltar para Corpo Clínico</a>
+                    </div>
+                    <h2 class="text-ouro text-center" style="margin-top: 0;">Contratar Dentista</h2>
+                    <hr style="border-color: #e2fdf6;">
+                    
+                    <form action="/cadastrar_dentista" method="POST">
+                        <div class="form-group">
+                            <label style="color: #e2fdf6;">Nome de Exibição (Ex: Dr. Fulano)</label>
+                            <input type="text" class="form-control" name="nome" required style="background-color: #08134b; color: #e2fdf6; border: 1px solid #49a4fc;">
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #e2fdf6;">Registro Profissional (CRO)</label>
+                            <input type="text" class="form-control" name="cro" placeholder="Ex: CRO-RJ 12345" required style="background-color: #08134b; color: #e2fdf6; border: 1px solid #49a4fc;">
+                        </div>
+                        <hr style="border-color: #49a4fc; margin-top: 30px;">
+                        <h4 class="text-ouro">Acesso ao Prontuário</h4>
+                        <div class="form-group">
+                            <label style="color: #e2fdf6;">Nome de Usuário (Login)</label>
+                            <input type="text" class="form-control" name="usuario_login" required style="background-color: #08134b; color: #e2fdf6; border: 1px solid #49a4fc;">
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #e2fdf6;">Senha do Doutor</label>
+                            <input type="text" class="form-control" name="senha_login" required style="background-color: #08134b; color: #e2fdf6; border: 1px solid #49a4fc;">
+                        </div>
+                        <button type="submit" class="btn btn-ouro btn-block" style="margin-top: 20px;">Salvar Contratação</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

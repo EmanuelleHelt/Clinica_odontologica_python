@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Paciente - Secretaria</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container dashboard-container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="main-panel">
+                    <div class="text-right mb-3" style="margin-bottom: 20px;">
+                        <a href="{{ url_for('secretaria_recepcao') }}" class="btn btn-ouro">Voltar para Recepção</a>
+                    </div>
+                    
+                    <h2 class="text-ouro text-center" style="margin-top: 0;">Cadastrar Nova Vítima</h2>
+                    <p class="text-center text-muted">Insira os dados clínicos e crie o acesso ao sistema.</p>
+                    <hr style="border-color: #e2fdf6;">
+                    
+                    <form action="/cadastro_paciente" method="POST">
+                        <div class="form-group">
+                            <label for="nome" style="color: #e2fdf6;">Nome Completo</label>
+                            <input type="text" class="form-control" id="nome" name="nome" placeholder="Ex: João Silva" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="telefone" style="color: #e2fdf6;">Telefone para Cobrança</label>
+                            <input type="text" class="form-control" id="telefone" name="telefone" placeholder="(21) 99999-9999" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="status" style="color: #e2fdf6;">Status Inicial</label>
+                            <select class="form-control" id="status" name="status">
+                                <option value="Aguardando">Aguardando na Recepção</option>
+                                <option value="Agendada">Consulta Agendada</option>
+                                <option value="Em pânico">Em pânico na sala de espera</option>
+                            </select>
+                        </div>
+
+                        <hr style="border-color: #49a4fc; margin-top: 30px;">
+                        <h4 class="text-ouro">Credenciais de Acesso do Paciente</h4>
+
+                        <div class="form-group">
+                            <label for="usuario_login" style="color: #e2fdf6;">Nome de Usuário (Login)</label>
+                            <input type="text" class="form-control" id="usuario_login" name="usuario_login" placeholder="Ex: joao.silva" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="senha_login" style="color: #e2fdf6;">Senha do Paciente</label>
+                            <input type="text" class="form-control" id="senha_login" name="senha_login" placeholder="Senha provisória" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-ouro btn-block" style="margin-top: 20px; font-size: 16px;">Salvar no Banco de Dados</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
