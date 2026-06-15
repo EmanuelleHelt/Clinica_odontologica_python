@@ -19,37 +19,19 @@
                     <div class="row">
                         <div class="col-sm-6" style="margin-bottom: 20px;">
                             <div class="card-paciente" style="border-left: none; border-bottom: 5px solid #e2fdf6;">
-                                <h3 style="color: #e2fdf6;">Consultório</h3>
-                                <p style="color: #49a4fc;">Atendimento, diagnósticos e consulta dental.</p>
-                                <a href="{{ url_for('interface_medico') }}" class="btn btn-ouro btn-block">Acessar Médico</a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6" style="margin-bottom: 20px;">
-                            <div class="card-paciente" style="border-left: none; border-bottom: 5px solid #e2fdf6;">
-                                <h3 style="color: #e2fdf6;">Recepção</h3>
-                                <p style="color: #49a4fc;">Gerenciamento de agenda e controle de pacientes.</p>
+                                <h3 style="color: #e2fdf6;">Secretaria</h3>
+                                <p style="color: #49a4fc;">Gerenciamento de agenda, controle de pacientes e dentistas.</p>
                                 <a href="{{ url_for('secretaria_recepcao') }}" class="btn btn-ouro btn-block">Acessar Secretaria</a>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-sm-6" style="margin-bottom: 20px;">
                             <div class="card-paciente" style="border-left: none; border-bottom: 5px solid #e2fdf6;">
                                 <h3 style="color: #e2fdf6;">Limpeza</h3>
-                                <p style="color: #49a4fc;">Porque alguém precisa limpar as bagunças.</p>
-                                <a href="{{ url_for('interface_limpeza') }}" class="btn btn-ouro btn-block">Acessar Manutenção</a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6" style="margin-bottom: 20px;">
-                            <div class="card-paciente" style="border-left: none; border-bottom: 5px solid #e2fdf6;">
-                                <h3 style="color: #e2fdf6;">Visão do Paciente</h3>
-                                <p style="color: #49a4fc;">Lista completa de pacientes e seus prontuarios.</p>
-                                <a href="{{ url_for('ficha_paciente') }}" class="btn btn-ouro btn-block">Acessar Pacientes</a>
+                                <p style="color: #49a4fc;">Gerenciamento de organização e limpeza dos consultórios.</p>
+                                <a href="{{ url_for('interface_limpeza') }}" class="btn btn-ouro btn-block">Acessar Limpeza</a>
                             </div>
                         </div>
                     </div>
-
                     <hr style="border-color: #49a4fc; margin-top: 20px;">
                     <a href="{{ url_for('login') }}" class="btn btn-danger" style="background-color: #be834e; border: none; font-weight: bold; color: #08134b;">Abandonar o sistema (Sair)</a>
                 </div>

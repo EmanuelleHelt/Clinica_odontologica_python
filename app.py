@@ -45,8 +45,8 @@ def inicializar_banco():
     if cursor.fetchone()[0] == 0:
         usuarios_iniciais = [
             ('admin', 'ufrj123', 'admin'),
-            ('dr.carlos', 'motor123', 'medico'),
-            ('dra.ana', 'broca123', 'medico'),
+            ('dr.carlosantonio', '123', 'medico'),
+            ('dra.anacarla', '123', 'medico'),
             ('secretaria', 'balcao123', 'secretaria'),
             ('emanuelle', 'paciente123', 'paciente')
         ]
