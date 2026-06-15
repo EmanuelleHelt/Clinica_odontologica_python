@@ -12,7 +12,8 @@ ARQUIVO_BANCO = 'clinica_real.db'
 if os.path.exists(ARQUIVO_BANCO):
     os.remove(ARQUIVO_BANCO)
     print("O banco antigo foi obliterado. Iniciando do zero.")
-# -------------------------------------
+# --- AMNÉSIA FORÇADA FIM ---
+# --- ATÉ AQUI ---
 
 # --- A INFRAESTRUTURA DE VERDADE ---
 def conectar_banco():
@@ -40,7 +41,7 @@ def inicializar_banco():
             horario TEXT NOT NULL
         )
     ''')
-    # A sua nova exigência: A tabela de usuários e papéis
+    # A tabela de usuários e papéis
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS usuarios (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -51,15 +52,16 @@ def inicializar_banco():
     ''')
     
     cursor.execute("SELECT COUNT(*) FROM pacientes_secretaria")
+    # --- COMENTE AS LINHAS ABAIXO PARA PARAR DE ALEATORIZAE OS DADOS ---
     if cursor.fetchone()[0] == 0:
         injetar_dados_ficticios(conn)
-        
+    # --- ATÉ AQUI ---
     conn.close()
 
 def injetar_dados_ficticios(conn):
     cursor = conn.cursor()
     
-    # Injetando os logins originais para você não ficar trancada do lado de fora
+    # Injetando os logins originais para demonstração
     usuarios_iniciais = [
         ('admin', 'ufrj123', 'admin'),
         ('dentista', 'motor123', 'medico'),
@@ -99,7 +101,7 @@ def autenticar():
     usuario_form = request.form.get('usuario').lower()
     senha_form = request.form.get('senha')
     
-    # O porteiro agora sabe ler registros oficiais
+    # O porteiro agora sabe lr registros oficiais kKK
     conn = conectar_banco()
     usuario_db = conn.execute('SELECT * FROM usuarios WHERE usuario = ? AND senha = ?', (usuario_form, senha_form)).fetchone()
     conn.close()
@@ -107,7 +109,7 @@ def autenticar():
     if usuario_db:
         papel = usuario_db['papel']
         
-        # O filtro de rotas dinâmico que você implorou
+        # O filtro de rotas dinâmico
         if papel == 'admin':
             return redirect(url_for('painel_admin'))
         elif papel == 'medico':
