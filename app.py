@@ -34,7 +34,6 @@ def inicializar_banco():
                         horario TEXT NOT NULL,
                         dentista_login TEXT NOT NULL)''')
 
-    # A sua mais nova exigência: O curral dos doutores
     cursor.execute('''CREATE TABLE IF NOT EXISTS dentistas (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         nome TEXT NOT NULL,
@@ -104,7 +103,7 @@ def interface_medico():
     conn = conectar_banco()
     pacientes_espera = conn.execute('SELECT * FROM fila_medico WHERE dentista_login = ?', (dentista_logado,)).fetchall()
     
-    # Buscando o nome real do dentista para ficar bonito na tela
+    # Buscando o nome real do dentista
     info_dentista = conn.execute('SELECT nome FROM dentistas WHERE usuario_login = ?', (dentista_logado,)).fetchone()
     nome_exibicao = info_dentista['nome'] if info_dentista else dentista_logado
 
@@ -148,7 +147,6 @@ def secretaria_consultas():
     conn.close()
     return render_template('secretaria_consultas.html', consultas=consultas_agendadas, termo=termo_pesquisa)
 
-# --- NOVAS ROTAS DE DOMINAÇÃO DOS DENTISTAS ---
 @app.route('/secretaria/dentistas')
 def secretaria_dentistas():
     termo_pesquisa = request.args.get('pesquisa', '')
@@ -211,7 +209,7 @@ def editar_dentista(id_dentista):
             cursor.execute('UPDATE usuarios SET usuario = ?, senha = ? WHERE usuario = ?', (login_novo, senha_nova, login_antigo))
             cursor.execute('UPDATE dentistas SET nome = ?, cro = ?, usuario_login = ? WHERE id = ?', 
                            (nome_novo, cro_novo, login_novo, id_dentista))
-            # O toque de gênio: atualizando as consultas caso você mude o login do doutor
+            # tualizando as consultas caso mude o login do doutor
             cursor.execute('UPDATE fila_medico SET dentista_login = ? WHERE dentista_login = ?', (login_novo, login_antigo))
             conn.commit()
             flash("Identidade do cirurgião reescrita nos registros.")
@@ -225,8 +223,6 @@ def editar_dentista(id_dentista):
     senha_atual = usuario_db['senha'] if usuario_db else ''
     conn.close()
     return render_template('editar_dentista.html', dentista=dentista_atual, senha_atual=senha_atual)
-
-# --- FIM DAS ROTAS DOS DENTISTAS ---
 
 @app.route('/cadastro_paciente', methods=['GET', 'POST'])
 def cadastro_paciente():

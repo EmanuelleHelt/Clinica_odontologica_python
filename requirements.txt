@@ -1,0 +1,3 @@
+eu utilizei flask, o formato de instalação:
+
+> pip install flask

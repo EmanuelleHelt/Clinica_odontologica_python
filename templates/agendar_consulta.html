@@ -44,7 +44,7 @@
                             <select class="form-control" id="dentista_login" name="dentista_login" required style="background-color: #08134b; color: #e2fdf6; border: 1px solid #49a4fc;">
                                 <option value="" disabled selected>Quem vai ser responsável pela consulta?</option>
                                 {% for d in dentistas %}
-                                    <option value="{{ d.usuario }}">{{ d.usuario }}</option>
+                                    <option value="{{ d.nome }}">{{ d.nome }}</option>
                                 {% endfor %}
                             </select>
                         </div>
