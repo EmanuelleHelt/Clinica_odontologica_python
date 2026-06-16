@@ -57,11 +57,10 @@ def inicializar_banco():
                        ('Emanuelle Helt', '(21) 00000-0000', 'Tremendo de medo na sala de espera', 'emanuelle'))
         conn.commit()
 
-    # Preenchendo os doutores antigos na tabela nova para o sistema não quebrar
     cursor.execute("SELECT COUNT(*) FROM dentistas")
     if cursor.fetchone()[0] == 0:
-        cursor.execute("INSERT INTO dentistas (nome, cro, usuario_login) VALUES (?, ?, ?)", ('Dr. Carlos', 'CRO-RJ 12345', 'dr.carlos'))
-        cursor.execute("INSERT INTO dentistas (nome, cro, usuario_login) VALUES (?, ?, ?)", ('Dra. Ana', 'CRO-RJ 67890', 'dra.ana'))
+        cursor.execute("INSERT INTO dentistas (nome, cro, usuario_login) VALUES (?, ?, ?)", ('Dr. Carlos', 'CRO-RJ 12345', 'dr.carlosantonio'))
+        cursor.execute("INSERT INTO dentistas (nome, cro, usuario_login) VALUES (?, ?, ?)", ('Dra. Ana', 'CRO-RJ 67890', 'dra.anacarla'))
         conn.commit()
 
     conn.close()
@@ -105,10 +104,9 @@ def interface_medico():
     
     data_atual = date.today().strftime('%Y-%m-%d')
     
-    # Obliterando os pacientes de ontem
     pacientes_espera = conn.execute('''
         SELECT * FROM fila_medico 
-        WHERE dentista_login = ? AND data >= ? 
+        WHERE dentista_login = ? AND data >= ?
         ORDER BY data ASC, horario ASC
     ''', (dentista_logado, data_atual)).fetchall()
     
@@ -137,7 +135,6 @@ def secretaria_consultas():
     termo_pesquisa = request.args.get('pesquisa', '')
     conn = conectar_banco()
     
-    # Capturando o exato momento em que você existe
     data_atual = date.today().strftime('%Y-%m-%d')
     
     query_base = '''
@@ -164,7 +161,6 @@ def secretaria_dentistas():
     conn = conectar_banco()
     
     if termo_pesquisa:
-        # Caçando os doutores pelo nome ou pelo registro profissional
         lista_dentistas = conn.execute('''
             SELECT d.*, u.senha 
             FROM dentistas d 
@@ -220,7 +216,6 @@ def editar_dentista(id_dentista):
             cursor.execute('UPDATE usuarios SET usuario = ?, senha = ? WHERE usuario = ?', (login_novo, senha_nova, login_antigo))
             cursor.execute('UPDATE dentistas SET nome = ?, cro = ?, usuario_login = ? WHERE id = ?', 
                            (nome_novo, cro_novo, login_novo, id_dentista))
-            # tualizando as consultas caso mude o login do doutor
             cursor.execute('UPDATE fila_medico SET dentista_login = ? WHERE dentista_login = ?', (login_novo, login_antigo))
             conn.commit()
             flash("Identidade do cirurgião reescrita nos registros.")
