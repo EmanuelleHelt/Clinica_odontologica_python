@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import date
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 
 app = Flask(__name__)
@@ -101,9 +102,16 @@ def interface_medico():
     if 'usuario' not in session: return redirect(url_for('login'))
     dentista_logado = session['usuario']
     conn = conectar_banco()
-    pacientes_espera = conn.execute('SELECT * FROM fila_medico WHERE dentista_login = ?', (dentista_logado,)).fetchall()
     
-    # Buscando o nome real do dentista
+    data_atual = date.today().strftime('%Y-%m-%d')
+    
+    # Obliterando os pacientes de ontem
+    pacientes_espera = conn.execute('''
+        SELECT * FROM fila_medico 
+        WHERE dentista_login = ? AND data >= ? 
+        ORDER BY data ASC, horario ASC
+    ''', (dentista_logado, data_atual)).fetchall()
+    
     info_dentista = conn.execute('SELECT nome FROM dentistas WHERE usuario_login = ?', (dentista_logado,)).fetchone()
     nome_exibicao = info_dentista['nome'] if info_dentista else dentista_logado
 
@@ -129,20 +137,23 @@ def secretaria_consultas():
     termo_pesquisa = request.args.get('pesquisa', '')
     conn = conectar_banco()
     
-    # Adicionamos o ORDER BY para organizar por data e depois por horário
+    # Capturando o exato momento em que você existe
+    data_atual = date.today().strftime('%Y-%m-%d')
+    
     query_base = '''
         SELECT f.*, d.nome as dentista_nome 
         FROM fila_medico f
         JOIN dentistas d ON f.dentista_login = d.usuario_login
+        WHERE f.data >= ?
     '''
     
     if termo_pesquisa:
         consultas_agendadas = conn.execute(query_base + '''
-            WHERE f.nome LIKE ? OR f.procedimento LIKE ? OR d.nome LIKE ?
+            AND (f.nome LIKE ? OR f.procedimento LIKE ? OR d.nome LIKE ?)
             ORDER BY f.data ASC, f.horario ASC
-        ''', (f'%{termo_pesquisa}%', f'%{termo_pesquisa}%', f'%{termo_pesquisa}%')).fetchall()
+        ''', (data_atual, f'%{termo_pesquisa}%', f'%{termo_pesquisa}%', f'%{termo_pesquisa}%')).fetchall()
     else:
-        consultas_agendadas = conn.execute(query_base + ' ORDER BY f.data ASC, f.horario ASC').fetchall()
+        consultas_agendadas = conn.execute(query_base + ' ORDER BY f.data ASC, f.horario ASC', (data_atual,)).fetchall()
         
     conn.close()
     return render_template('secretaria_consultas.html', consultas=consultas_agendadas, termo=termo_pesquisa)

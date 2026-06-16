@@ -34,6 +34,7 @@
                         {% for consulta in consultas %}
                         <div style="background-color: #153a83; border: 1px solid #49a4fc; padding: 15px; border-radius: 4px; margin-bottom: 10px;">
                             <p style="color: #e2fdf6; margin: 0; font-size: 16px;">
+                                <strong>Data:</strong> {{ consulta.data }} |
                                 <strong>Horário:</strong> <span style="color: #be834e;">{{ consulta.horario }}</span> | 
                                 <strong>Procedimento:</strong> {{ consulta.procedimento }}
                             </p>
